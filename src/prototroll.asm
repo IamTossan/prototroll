@@ -3,7 +3,6 @@
 SECTION .rodata
     SYS_FORK            equ 2
     SYS_READ            equ 3
-    SYS_WRITE           equ 4
     SYS_CLOSE           equ 6
     SYS_SOCKETCALL      equ 102
 
@@ -79,15 +78,12 @@ _fork:
 
     cmp     eax, 0
     jz      _writeInvite
-
     jmp     _accept
 
 _writeInvite:
-    mov     edx, 16
-    mov     ecx, invite
     mov     ebx, esi
-    mov     eax, SYS_WRITE
-    int     80h
+    mov     eax, invite
+    call    sprint
 
 _cleanBuffer:
     mov     ebx, 255
@@ -109,15 +105,18 @@ _read:
     mov     eax, SYS_READ
     int     80h
 
+    push    ebx
+
+    mov     ebx, 1
     mov     eax, buffer
     call    sprint
 
+    pop     ebx
+
 _write:
-    mov     edx, 78
-    mov     ecx, buffer
     mov     ebx, esi
-    mov     eax, SYS_WRITE
-    int     80h
+    mov     eax, buffer
+    call    sprint
 
     jmp     _writeInvite
 

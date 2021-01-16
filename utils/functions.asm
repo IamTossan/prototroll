@@ -1,4 +1,4 @@
-; void iprint(Integer number
+; void iprint(Integer number)
 ; Integer printing function (itoa)
 iprint:
     push    eax
@@ -61,7 +61,7 @@ nextchar:
     pop     ebx
     ret
 
-; void sprint(String message)
+; void sprint(eax: str pointer, ebx: file descriptor)
 ; String printing function
 sprint:
     push    edx
@@ -74,7 +74,6 @@ sprint:
     pop     eax
 
     mov     ecx, eax
-    mov     ebx, 1
     mov     eax, 4
     int     80h
 
